@@ -12,4 +12,4 @@ def classfy0(inX, dataSet, labels, k):
     diffMat = tile(inX, (dataSetSize, 1)) - dataSet
     sqDiffMat = diffMat**2
     sqDistance = sqDiffMat.sum(axis = 0)
-    print "zhongytukeyil"
+print "huaxinze"
