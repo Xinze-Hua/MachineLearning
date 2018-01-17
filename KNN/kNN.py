@@ -4,6 +4,7 @@ import numpy
 import string
 import matplotlib
 import operator
+from os import listdir
 import matplotlib.pyplot as plt
 
 #  测试小程序
@@ -113,5 +114,39 @@ def classifyPerson():
     classfyResult = classify0(temp, normDataSet, DatingLabels, 3)
     print resultList[classfyResult-1]
 
+# classifyPerson()
 
-classifyPerson()
+def imgToVector(filename):  # 读取文本信息
+    fp = open(filename)
+    returnVector = zeros((1,1024))  # 建立一个空的数组
+    for i in range(32):
+        linestr = fp.readline()
+        for j in range(32):
+            returnVector[0, 32*i+j] = int(linestr[j])
+    return returnVector
+
+def handingWritingClassTest():
+    hwLabels = []
+    trainingFileList = listdir('trainingDigits')
+    m = len(trainingFileList)
+    trainingMat = zeros((m,1024))
+    for i in range(m):
+        fileNameStr = trainingFileList[i]
+        filestr = fileNameStr.split('.')[0]
+        classNumStr = filestr.split('_')[0]
+        hwLabels.append(int(classNumStr))
+        trainingMat[i] =imgToVector('trainingDigits/'+trainingFileList[i])
+    TestFileList = listdir('testDigits')
+    n = len(TestFileList)
+    errorCount = 0.0
+    for i in range(n):
+        fileNameStr = TestFileList[i]
+        filestr = fileNameStr.split('.')[0]
+        classNumStr = filestr.split('_')[0]
+        VectorUnderTest = imgToVector('testDigits/'+TestFileList[i])
+        ResultClass = classify0(VectorUnderTest, trainingMat, hwLabels, 3)
+        if(ResultClass != int(classNumStr)): errorCount += 1.0
+    print "手写字体分类错误率：", errorCount / float(n)
+
+imgToVector('trainingDigits/0_0.txt')
+handingWritingClassTest()
