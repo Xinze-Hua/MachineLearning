@@ -69,10 +69,12 @@ def classify0(inX, dataSet, labels, k):  # 对数据进行k近邻分类
     sortedClassCount = sorted(classCount.iteritems(), key=operator.itemgetter(1), reverse=True)
     return sortedClassCount[0][0]
 
+
 def datingClassTest():  #  留一验证
     hoRatio = 0.10
     DatingDataMat, DatingLabels = file2Martix('datingTestSet2.txt')
     normDataSet, ranges, minVals = autoNorm(DatingDataMat)
+    print normDataSet[0]
     num = normDataSet.shape[0]
     numTestVecs = int(num*hoRatio)  #选择数据集的数目
     errorCount = 0.0
@@ -82,6 +84,7 @@ def datingClassTest():  #  留一验证
         if(classfyResult!=DatingLabels[i]):
             errorCount += 1.0
     print errorCount/float(numTestVecs)
+
 
 def datingClassTest2():  # 交叉验证
     DatingDataMat, DatingLabels = file2Martix('datingTestSet.txt')
@@ -97,6 +100,7 @@ def datingClassTest2():  # 交叉验证
             errorCount += 1.0
     print errorCount/float(num)
 
+
 def classifyPerson():
     resultList = ['not at all', 'in small doses', 'in large doses']
     percentTats = float(raw_input("percentage of time spent playing video games?"))
@@ -106,6 +110,8 @@ def classifyPerson():
     normDataSet, ranges, minVals = autoNorm(DatingDataMat)
     inArr = [ffMiles, percentTats, iceCream]
     temp = (inArr - minVals)/ranges
-    classfyResult = classify0(temp, DatingDataMat, DatingLabels, 3)
+    classfyResult = classify0(temp, normDataSet, DatingLabels, 3)
     print resultList[classfyResult-1]
+
+
 classifyPerson()
