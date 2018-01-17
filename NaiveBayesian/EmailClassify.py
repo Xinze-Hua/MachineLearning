@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
 from numpy import *
+import re  #  正则表达式
 
 def loadDataSet():  # 训练实例
     postingList = [
@@ -68,3 +69,13 @@ for postinDoc in ListofPost:
 p0Vect, p1Vect, pClass = trainNaiveBayesian(trainMat, ListClasses)
 temp = setOfWordToVector(VocabList, ['stupid', 'love', 'dalmation'])
 ClassifyNaiveBayesian(temp, p0Vect, p1Vect, pClass)
+
+def SplitEmailtext(filename):
+    regEx = re.compile('\\W*')
+    fr = open(filename)
+    wordlist = fr.readlines()
+    for wordline in wordlist:
+        temp = regEx.split(wordline)
+        print temp
+
+SplitEmailtext('email/spam/1.txt')
