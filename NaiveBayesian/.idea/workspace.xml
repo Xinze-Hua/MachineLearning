@@ -14,8 +14,8 @@
       <file leaf-file-name="EmailClassify.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/EmailClassify.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1080">
-              <caret line="72" column="29" lean-forward="true" selection-start-line="72" selection-start-column="29" selection-end-line="72" selection-end-column="29" />
+            <state relative-caret-position="683">
+              <caret line="72" column="0" lean-forward="false" selection-start-line="72" selection-start-column="2" selection-end-line="80" selection-end-column="36" />
               <folding>
                 <element signature="e#23#42#0" expanded="true" />
               </folding>
@@ -208,8 +208,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/EmailClassify.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1080">
-          <caret line="72" column="29" lean-forward="true" selection-start-line="72" selection-start-column="29" selection-end-line="72" selection-end-column="29" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#23#42#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/EmailClassify.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="683">
+          <caret line="72" column="0" lean-forward="false" selection-start-line="72" selection-start-column="2" selection-end-line="80" selection-end-column="36" />
           <folding>
             <element signature="e#23#42#0" expanded="true" />
           </folding>
