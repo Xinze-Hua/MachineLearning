@@ -58,3 +58,4 @@ for postinDoc in ListofPost:
 p1Vect, p0Vect = trainNaiveBayesian(trainMat, ListClasses)
 print p0Vect
 print p1Vect
+print "ok"
