@@ -9,26 +9,12 @@ leafNode = dict(boxstyle = 'round4', fc = '0.8')  # 设置叶子节点的属性,
 arrow_args = dict(arrowstyle = '<-')  # 设置箭头的属性,存储为字典格式
 
 
+# 节点绘制函数
 def plotNode(NodeText, centerPt, parentPt, NodeType):   # 添加注释函数
     createPlot.ax1.annotate(NodeText, xy = parentPt, xycoords = 'axes fraction', xytext = centerPt, textcoords = 'axes fraction', va = 'center', ha = 'center', bbox = NodeType, arrowprops = arrow_args)
 
-def createPlot():   # 画图函数
-    fig = plt.figure(1, facecolor = 'white')  # 第一个参数表示图ID，第二个参数表示背景颜色，通过plt.figure.__doc__了解更多关于figure的参数详情
-    fig.clf() # 清除图像内容
-    # axprops = dict(xticks = [], yticks = []) # 除去坐标轴
-    createPlot.ax1 = plt.subplot(111,frameon = False)  # 定义一个函数参数，该变量是一个全局变量, **axprops
-    plotNode('DecisionNode', (0.5, 1), (0.5, 1), decisionNode)
-    plotNode('LeafNode', (0.8,0.1), (0.5,1), leafNode)
-    plt.show()
 
-
-def plotMidText(centerPt, parentPt, txtString):  # 在注释中间添加文字说明
-    xMid = (centerPt[0]-parentPt[0])/2.0 + parentPt[0]
-    yMid = (centerPt[1]-parentPt[1])/2.0 + parentPt[1]
-    createPlot.ax1.text = (xMid,yMid,txtString)
-
-# createPlot()
-
+# 计算决策树的深度
 def ComputeTreeDepth(MyTree):  # 计算树的深度
     MaxDepth = 0 # 用来记录树的最大深度
     firstStr = MyTree.keys()[0] # 节点的key
@@ -40,6 +26,8 @@ def ComputeTreeDepth(MyTree):  # 计算树的深度
         if thisDepth>MaxDepth: MaxDepth=thisDepth
     return MaxDepth
 
+
+# 统计叶子节点的数目
 def CountLeafNode(MyTree):  # 计算树的宽度
     numberLeafs = 0.0  # 用来记录叶子节点的数目
     firstStr = MyTree.keys()[0]
@@ -51,7 +39,15 @@ def CountLeafNode(MyTree):  # 计算树的宽度
     return numberLeafs
 
 
-def creatPlot(MyTree):
+# 在箭头中间添加文字说明
+def plotMidText(centerPt, parentPt, txtString):  # 在注释中间添加文字说明
+    xMid = (centerPt[0]-parentPt[0])/2.0 + parentPt[0]
+    yMid = (centerPt[1]-parentPt[1])/2.0 + parentPt[1]
+    createPlot.ax1.text = (xMid, yMid, txtString)
+
+
+# 建立绘图
+def createPlot(MyTree):
     fig = plt.figure(1, facecolor = 'white')
     fig.clf()
     axprops = dict(xticks = [], yticks = []) # 除去坐标轴
@@ -65,6 +61,7 @@ def creatPlot(MyTree):
     plt.show()
 
 
+# 绘制树形图
 def plotTree(MyTree, parentPt, nodeTxt):  # 绘制树形图
     numLeafs = CountLeafNode(MyTree)  # 当前子树的叶子数目
     depth = ComputeTreeDepth(MyTree)   # 当前子树的深度
@@ -81,10 +78,9 @@ def plotTree(MyTree, parentPt, nodeTxt):  # 绘制树形图
             plotTree.xOff = plotTree.xOff + 1.0/plotTree.totalW  # 每画一个叶子节点，就更新X轴的偏移量
             plotNode(secondDict[key], (plotTree.xOff, plotTree.yOff), cntrPt, leafNode)
             plotMidText((plotTree.xOff, plotTree.yOff), cntrPt, str(key))
-    plotTree.yOff = plotTree.yOff - 1.0/plotTree.totalD
+    plotTree.yOff = plotTree.yOff + 1.0 / plotTree.totalD  # 更新Y轴偏移量
 
-MyTree = {'House': {'1': 'yes', '0': {'Work': {'1': 'yes', '0': 'no'}}}}
-
-# print ComputeTreeDepth(MyTree)
-# print CountLeafNode(MyTree)
-creatPlot(MyTree)
+#
+# # MyTree = {'House': {'1': 'yes', '0': {'Work': {'1': 'yes', '0': 'no'}}}}
+# MyTree = {'No Surfacing': {'1': {'flippers': {'1': 'yes', '0': 'no'}}, '0': 'no'}}
+# createPlot(MyTree)

@@ -1,15 +1,18 @@
 # -*- coding:utf-8 -*-
 import numpy
 from math import log
+import treePlotter
 
 
 #####################################################数据集以及特征集#####################################################
-FeatureLabels = ['Age', 'Work', 'House', 'Credit']
-DataSet = [['0',0,0,0,'no'],['0',0,0,1,'no'],['0',1,0,1,'yes'],['0',1,1,0,'yes'],['0',0,0,0,'no'],['1',0,0,0,'no'],['1',0,0,1,'no'],
-           ['1',1,1,1,'yes'],['1',0,1,2,'yes'],['1',0,1,2,'yes'],['2',0,1,2,'yes'],['2',0,1,1,'yes'],['2',1,0,1,'yes'],['2',1,0,2,'yes'],['2',0,0,0,'no']]
+# FeatureLabels = ['Age', 'Work', 'House', 'Credit']
+# DataSet = [['0',0,0,0,'no'],['0',0,0,1,'no'],['0',1,0,1,'yes'],['0',1,1,0,'yes'],['0',0,0,0,'no'],['1',0,0,0,'no'],['1',0,0,1,'no'],
+#            ['1',1,1,1,'yes'],['1',0,1,2,'yes'],['1',0,1,2,'yes'],['2',0,1,2,'yes'],['2',0,1,1,'yes'],['2',1,0,1,'yes'],['2',1,0,2,'yes'],['2',0,0,0,'no']]
 
 # FeatureLabels = ['No Surfacing', 'flippers', 'House', 'Credit']
 # DataSet = [[1,1,'yes'],[1,1,'yes'],[1,0,'no'],[0,1,'no'],[0,1,'no']]
+
+FeatureLabels = ['age', 'prescript', 'astigmatic', 'tearRate']
 
 
 #####################################################数据处理及特征提取###################################################
@@ -70,7 +73,7 @@ def calcInformationGain(dataSet, featureVec):
 
 # 按照多数原则确定集合类别
 def MajorityCnt(classList):
-    '''This function is to decide which class the data set according to most principles '''
+    '''This function is to decide which class the data set according to most principles! '''
     import operator
     classCount = {}
     for vote in classList:
@@ -84,6 +87,7 @@ def MajorityCnt(classList):
 #######################################################递归构造决策树#####################################################
 # 递归构造决策树
 def creatDecisionTree(dataSet, featureVec):
+    '''This function is to built Decision Tree in recursion!'''
     classList = [el[-1] for el in dataSet]  # 数据的类别集合
     if(classList.count(classList[0])==len(classList)):  #  如果数据集中的实例全部属于同一类，则停止递归
         return classList[0]
@@ -91,14 +95,18 @@ def creatDecisionTree(dataSet, featureVec):
         return MajorityCnt(classList)
     bestFeatureIndex = calcInformationGain(dataSet, featureVec)  # 获取最优特征
     DecisionTree = {FeatureLabels[bestFeatureIndex]:{}}  # 构造树特征
-    featureVec.remove(bestFeatureIndex)
-    print bestFeatureIndex
-    print FeatureLabels[bestFeatureIndex]
     SplitDataSet, SplitDataProb, SplitValueVec = splitDataSet(dataSet, bestFeatureIndex)
     for value in SplitValueVec:
         DecisionTree[FeatureLabels[bestFeatureIndex]][value] = creatDecisionTree(SplitDataSet[SplitValueVec.index(value)], featureVec)
     return DecisionTree
 
 
-
-print creatDecisionTree(DataSet,[0,1,2,3])
+#####################################################隐形眼镜推荐决策树实例#################################################
+fr = open('lenses.txt')
+DataList = fr.readlines()
+DataMat = []
+for line in DataList:
+    DataMat.append(line.strip().split('\t'))
+MyTree = creatDecisionTree(DataMat,[0,1,2,3])
+print MyTree
+treePlotter.createPlot(MyTree)
