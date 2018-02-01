@@ -122,7 +122,7 @@ def createTree(DataSet, featureMat, leafType = regLeaf, errType = ComputeVar, op
 #  生成回归树
 DataSet = LoadDataSet('ex2.txt')
 featureMat = ObtainFeatureValueMat(DataSet)
-RegressionTree = createTree(DataSet, featureMat, ops = (100, 1))
+RegressionTree = createTree(DataSet, featureMat, ops = (10000, 1))
 print RegressionTree
 
 ####################################################### 回归树剪枝部分 ###################################################
