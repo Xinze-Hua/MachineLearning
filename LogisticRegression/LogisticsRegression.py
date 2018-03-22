@@ -96,6 +96,7 @@ def classifyVector(inX, weight):
     if prob > 0.5:return 1.0
     else: return 0.0
 
+
 def colicTest():
     frTrain = open('horseColicTraining.txt')
     frTest = open('horseColicTest.txt')
